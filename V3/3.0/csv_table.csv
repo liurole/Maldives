@@ -1,0 +1,11 @@
+Backlight:,Contrast Ratio:,Dot Format:,Horizontal Viewing Angle:,Interface:,LCD Mode:,Luminance (Cd/m2):,Mass (g):,Module Type:,Operating Temperature (oC):,Outer Dimension (mm):,Product Feature:,Size:,Status:,Storage Temperature (oC):,Type:,Vertical Viewing Angle:,Viewing Direction:
+LED,1000:1,320X240,+-80,24bits RGB/SPI,Normally White TN,1200,40g,TFT Digital,-20 to 70,76.9 (W)  x 63.9 (H)  x 4.9 (D) ,"LED, Super High Bright, Industrial","3.5""",Active,-30 to 80,Transmissive,-60/80,
+LED,1000:1,320X240,+-80,24bits RGB/SPI,Normally White TN,1000,45g,TFT Digital,-20 to 70,76.9 (W)  x 63.9 (H)  x 4.9 (D) ,"High Bright, LED, Industrial","3.5""",Active,-30 to 80,Transmissive,-60/80,12:00
+LED,1000:1,320X240,+-80,24bits RGB/SPI,Normally White TN,400,40 g,TFT Digital,-20 to 70,76.9 (W)  x 63.9 (H)  x 4.9 (D) ,"LED, Industrial","3.5""",Active,-30 to 80,Transmissive,-60/80,12:00
+LED,1000:1,320X240,+-80,24bits RGB/SPI,Normally White TN,320,50g,TFT Digital,-20 to 70,76.9 (W)  x 63.9 (H)  x 6.3 (D) ,"LED, 4-wire resistive TTS, Industrial","3.5""",Active,-30 to 80,Transmissive,-60/80,12:00
+LED,350:1,480X272,+-70,CMOS,Normally White TN,800,75 g,TFT Digital,-20 to 70,105.5 (W)  x 67.2 (H)  x 5.9 (D) ,"High Bright, LED, Industrial","4.3""",Active,-30 to 80,Transmissive,-65/60,
+LED,350:1,480X272,+-70,CMOS,Normally White TN,450,75,TFT Digital,-20 to 70,105.5 (W)  x 67.2 (H)  x 5.9 (D) ,"LED, Side Mount, Industrial","4.3""",Active,-30 to 80,Transmissive,-65/60,
+LED,350:1,480X272,+-70,CMOS,Normally White TN,640,100g,TFT Digital,-20 to 70,105.5 (W)  x 67.2 (H)  x 7.7 (D) ,"High Bright, LED, 4-wire resistive TTS, Industrial","4.3""",Active,-30 to 80,Transmissive,-65/60,6:00
+LED,350:1,480X272,+-70,CMOS,Normally White TN,360,100g,TFT Digital,-20 to 70,105.5 (W)  x 67.2 (H)  x 7.7 (D) ,"LED, 4-wire resistive TTS, Industrial","4.3""",Active,-30 to 80,Transmissive,-65/60,
+LED,400:1,320X240,+-65,18-bit RGB Interface,Normally White TN,1100,140,TFT Digital,-20 to 70,134.5 (W)  x 103.4 (H)  x 8 (D) ,"LED, Industrial","5.7""",Active,-30 to 80,Transmissive,-60/80,
+,500:1,640X480,+-80,CMOS,Normally White TN,800,145,TFT Digital,-20 to 70,134.5 (W)  x 103.4 (H)  x 8 (D) ,"High Bright, LED, Industrial","5.7""",Active,-30 to 80,Transmissive,-80/80,

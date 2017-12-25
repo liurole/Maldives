@@ -77,7 +77,7 @@ for i in arr1:
     #增加无序列表
     paragraph = doc.add_paragraph(i)  
     paragraph_format = paragraph.paragraph_format  
-    paragraph_format.left_indent = Inches(0.291)  
+    #paragraph_format.left_indent = Inches(0.291)  
 
 doc.add_paragraph('')
   
@@ -89,7 +89,7 @@ for i in arr2:
     #增加无序列表
     paragraph = doc.add_paragraph(i)  
     paragraph_format = paragraph.paragraph_format  
-    paragraph_format.left_indent = Inches(0.291)  
+    #paragraph_format.left_indent = Inches(0.291)  
 
 
 doc.save("Maldives.docx")

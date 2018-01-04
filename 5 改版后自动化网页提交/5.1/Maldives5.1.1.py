@@ -29,10 +29,30 @@ import csv
 import codecs
 import random
 import re
+import xlrd  
+
 # 可直接通过pip install 安装
 from docx import Document
 from docxtpl import DocxTemplate
 
+def open_excel(file):  
+    data = xlrd.open_workbook(file)  
+    return data
+
+def excel_table_byindex(file, colnameindex = 0, by_index = 0):  
+    data = open_excel(file)  
+    table = data.sheets()[by_index]  
+    nrows = table.nrows #行数   
+    colnames = table.row_values(colnameindex) #某一行数据  
+    list = []  
+    for rownum in range(1,nrows):  
+        row = table.row_values(rownum)#以列表格式输出  
+        if row:  
+            app = {}  
+            for i in range(len(colnames)):  
+                app[colnames[i]] = row[i]  
+            list.append(app)#向列表中插入字典类型的数据  
+    return list  
 
 # 帮助run Maldives5.1.1.py --help
 if __name__ == '__main__':
@@ -56,13 +76,13 @@ if __name__ == '__main__':
 # STEP 1，首先读取所需的paragraph.csv，detail.csv文件，被注释的两端分别用来检测是否运行成功
 
     # 查找所选index，这里利用变量pick保存（字典类型）
-    with codecs.open('detail.csv', "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row['序号'] == str(index):
-                pick = row
-        f.close()
-        
+    tables = excel_table_byindex(file='detail.xlsx') 
+    pick_temp = tables[int(index)]
+    pick = {}
+    
+    for key in pick_temp:
+        pick[key] = str(pick_temp[key])
+         
 #    ref_app = []
 #    with codecs.open('app.csv', "r", 'utf_8_sig') as f:
 #        reader = csv.reader(f)

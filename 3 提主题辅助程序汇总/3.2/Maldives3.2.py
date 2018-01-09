@@ -239,7 +239,10 @@ if __name__ == '__main__':
         
         f.close()    
     
+#    index = 0
 #    for url in sub_urls:
+#        index += 1
+#        print('Running:\t' + str(index))
 #        get_all(url)
 
 

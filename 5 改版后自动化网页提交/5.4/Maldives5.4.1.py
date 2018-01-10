@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     # 查找所选index，这里利用变量pick保存（字典类型）
     tables = excel_table_byindex('detail.xlsx', 0, 3) 
-    pick_temp = tables[int(index - 1)]
+    pick_temp = tables[int(index) - 1]
     pick = {}
     
     for key in pick_temp:

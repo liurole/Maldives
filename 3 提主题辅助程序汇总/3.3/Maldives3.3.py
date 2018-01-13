@@ -17,7 +17,12 @@ import urllib
 
 def getFile(url):
     file_name = url.split('/')[-1]
-    urllib.request.urlretrieve(url, file_dir + 'pdf/' + file_name)
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0'}  
+    req = urllib.request.Request(url, headers=headers) 
+    data = urllib.request.urlopen(req).read()  
+    f = open(file_dir + 'pdf/' + file_name, 'wb') 
+    f.write(data)  
+    f.close()
     print ("Sucessful to download" + " " + file_name)
 
 
@@ -37,7 +42,7 @@ if __name__ == '__main__':
 
     print('马尔代夫V3.3\tStored in:', file_dir, '\tFrom:', file_web) 
     
-   # 得到所有urls
+    # 得到所有urls
     urls = []
     with open(file_dir + file_web) as csvfile:
         reader = csv.DictReader(csvfile)
@@ -49,7 +54,6 @@ if __name__ == '__main__':
     for url in urls:
         if url != '':
             try:
-                urllib.request.urlopen(url)
                 getFile(url)
             except:
                 pass

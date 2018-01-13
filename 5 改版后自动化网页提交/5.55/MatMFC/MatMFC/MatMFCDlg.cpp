@@ -196,6 +196,7 @@ void CMatMFCDlg::OnBnClickedSave()
 	cv::Mat gray, mask, thr;
 	cv::cvtColor(input, gray, cv::COLOR_BGR2GRAY);
 	cv::threshold(gray, mask, 220, 255, cv::THRESH_BINARY_INV);
+	cv::Mat mask_copy = mask;
 	//cv::imshow("threshold", input);
 	//cv::waitKey();
 
@@ -229,9 +230,18 @@ void CMatMFCDlg::OnBnClickedSave()
 		}
 	}
 
-	int height = src.rows - 20 - line;
+	int step = 20;
+
+	int height = src.rows - 2 * step - line;
 	int width = height * thr.cols / thr.rows;
 
-	cv::Rect rect = cv::Rect()
-
+	cv::Rect rect = cv::Rect(src.cols/2 - width/2, src.rows - step - height, width, height);
+	cv::GaussianBlur(input, input, cv::Size(3, 3), 1, 1);
+	cv::resize(input, input, cv::Size(rect.width, rect.height));
+	cv::resize(mask_copy, mask_copy, cv::Size(rect.width, rect.height));
+	//cv::imshow("mask", mask);
+	//cv::waitKey();
+	input.copyTo(src(rect), mask_copy);
+	DrawMat(src, IDC_OUT);
+	cv::imwrite("src/output.jpg", src);
 }

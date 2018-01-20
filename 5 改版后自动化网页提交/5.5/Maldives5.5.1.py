@@ -138,8 +138,12 @@ if __name__ == '__main__':
             break
         else:
             temp = detail[i]['特性']
-            t = temp.split('• ')
-            feature.append(t[1])
+            if '• ' in temp:
+                t = temp.split('• ')
+                feature.append(t[1])
+            else:
+                feature.append(temp)
+            
 
 # STEP 2，三段话的随机组合生成
 

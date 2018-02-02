@@ -85,7 +85,7 @@ if __name__ == '__main__':
         f.close()
         
     ref_app = []
-    with codecs.open('app.csv', "r", 'utf_8_sig') as f:
+    with codecs.open('app.csv', "r") as f:
         reader = csv.reader(f)
         for row in reader:
             ref_app.append(row[0])    
@@ -151,10 +151,8 @@ if __name__ == '__main__':
 
 # STEP 3，参数的替换
     
-    first = random.randint(0, len(ref_app) - 1)
-    second = random.randint(0, len(ref_app) - 1)
-    while first == second:
-        second = random.randint(0, len(ref_app) - 1)
+    r_list = range(0, len(ref_app))
+    app_index = random.sample(r_list, 3)
 
     temp1 = pl1[0].replace('XXX', pick['型号'])
     
@@ -195,11 +193,15 @@ if __name__ == '__main__':
     if pick['Operating Temperature (oC)'] == '':
         err.append('操作温度')
     else: 
-        temp2 = pl3[2].replace('XXX', pick['Operating Temperature (oC)'])
+        temper1 = pick['Operating Temperature (oC)']
+        temper1 = temper1.replace(' to ', '至')
+        temp2 = pl3[2].replace('XXX', temper1)
     if pick['Storage Temperature (oC)'] == '':
         err.append('储存温度')
     else:
-        temp2 = temp2.replace('YYY', pick['Storage Temperature (oC)'])
+        temper2 = pick['Storage Temperature (oC)']
+        temper2 = temper2.replace(' to ', '至')
+        temp2 = temp2.replace('YYY', temper2)
     if pick['Outer Dimension (mm):'] == '':
         err.append('尺寸')
     else:
@@ -227,13 +229,11 @@ if __name__ == '__main__':
     MyContent_type = '新产品'
     MyContent_abstract = ''  # 摘要默认为空，手写
     MyContent_factory = 'Kyocera(京瓷)'
-    MyContent_device = '显示屏，液晶显示屏，薄膜晶体管，TFT， Thin Film Transistor'
+    MyContent_device = '显示屏，液晶显示屏，薄膜晶体管，液晶显示模块，TFT， Thin Film Transistor'
     # 型号由detail导入
     MyContent_app = ''  # 应用选用随机生成
     
-    MyContent_key = '薄膜晶体管，TFT，液晶显示屏，显示屏，' + pick['分辨率']
-    if pick['大小'] != "":
-        MyContent_key += '，' + pick['大小'] + '英寸'
+    MyContent_key = '温度，大小，尺寸，对比度，亮度，分辨率'
         
     MyContent_name = '刘阳（翻译）'
     MyContent_author = '穿山甲说'
@@ -261,27 +261,49 @@ if __name__ == '__main__':
     r1 = p1.add_run(pick['型号'] + '的主要特点：')
     
     if pick['特性1'] != '':
-        paragraph = doc.add_paragraph(pick['特性1'])
+        paragraph = doc.add_paragraph('• ' + pick['特性1'])
         paragraph_format = paragraph.paragraph_format
     if pick['特性2'] != '':
-        paragraph = doc.add_paragraph(pick['特性2'])
+        paragraph = doc.add_paragraph('• ' + pick['特性2'])
         paragraph_format = paragraph.paragraph_format
+    
+    feature1 = pick['大小'] + '寸液晶显示屏，分辨率为' + pick['分辨率']
+    paragraph = doc.add_paragraph('• ' + feature1)
+    paragraph_format = paragraph.paragraph_format
+    
+    if pick['类型'] == 'Transflective':
+        feature2 = '半透液晶屏'
+    elif pick['类型'] == 'Transmissive':
+        feature2 = '全透液晶屏'
+    paragraph = doc.add_paragraph('• ' + feature2)
+    paragraph_format = paragraph.paragraph_format
+    
+    feature3 = '操作温度为XXX度，储存温度为YYY度'
+    feature3 = feature3.replace('XXX', temper1)
+    feature3 = feature3.replace('YYY', temper2)
+    paragraph = doc.add_paragraph('• ' + feature3)
+    paragraph_format = paragraph.paragraph_format
+    paragraph = doc.add_paragraph('• ')
+    paragraph_format = paragraph.paragraph_format
+    paragraph = doc.add_paragraph('• ')
+    paragraph_format = paragraph.paragraph_format
     
     doc.add_paragraph('')
     p2 = doc.add_paragraph('')
     r2 = p2.add_run(pick['型号'] + '的典型应用：')
     
     application = pick['应用']
-    application = application.replace('?', '')
-    app_list = application.split(',')
-    for i in app_list:
-        i = i.strip()
-        paragraph = doc.add_paragraph(i)  
-        paragraph_format = paragraph.paragraph_format
-    doc.add_paragraph(ref_app[first]) 
-    doc.add_paragraph(ref_app[second]) 
+    if application != '':
+        application = application.replace('?', '')
+        app_list = application.split(',')
+        for i in app_list:
+            i = i.strip()
+            paragraph = doc.add_paragraph(i)  
+            paragraph_format = paragraph.paragraph_format
+    doc.add_paragraph(ref_app[app_index[0]]) 
+    doc.add_paragraph(ref_app[app_index[1]]) 
+    doc.add_paragraph(ref_app[app_index[2]]) 
     
     file_name = 'result_temp.docx'
-    
     
     doc.save(file_name)  

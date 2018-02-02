@@ -10,15 +10,18 @@ import xlrd
 import difflib
 import re
 
+# 比较字符串
 def compare_str(first, second):
     seq = difflib.SequenceMatcher(lambda x: x in '-', first, second)  
     ratio = seq.ratio()
     return ratio    
 
+# 读取excel
 def open_excel(file):  
     data = xlrd.open_workbook(file)  
     return data
 
+# 读取excel
 def excel_table_byindex(file, colnameindex = 0, by_index = 0):  
     data = open_excel(file)  
     table = data.sheets()[by_index]  
@@ -34,65 +37,83 @@ def excel_table_byindex(file, colnameindex = 0, by_index = 0):
             list.append(app)#向列表中插入字典类型的数据  
     return list  
 
-def separated(id):
+# 获取单个表的厂牌，姓名
+def separatedfactory(id, th1, th2):
     tables = excel_table_byindex('总结.xlsx', 0, id)
+    factory = []
     name = []
-    name.append(tables[0]['厂牌'])
-    for i in range(1, len(tables)):
-        ratio = 1
-        temp = tables[i]['厂牌']
-        temp = re.sub('[^a-zA-Z\s]', '', temp).lower()
-        for val in name:
-            ratio = compare_str(val, temp)
-        if ratio < 0.8:
-            name.append(temp)
-    return name
-            
+    init = 1
+    for i in range(len(tables)):
+        ratio_f = 0
+        ratio_n = 0
+        temp_f = tables[i]['厂牌']
+        temp_n = tables[i]['姓名']
+        if '翻译' in temp_n:
+            temp_n = temp_n[:-4]
+        temp_f = re.sub('[^a-zA-Z\s]', '', temp_f).lower()
+        if temp_f == '':
+            continue
+        if init:
+            factory.append(temp_f)
+            name.append(temp_n)
+            init = 0
+        else:
+            for val in factory:
+                r = compare_str(val, temp_f)
+                ratio_f = max(ratio_f, r)
+            if ratio_f < th1:
+                factory.append(temp_f)
+            for val in name:
+                r = compare_str(val, temp_n)
+                ratio_n = max(ratio_n, r)
+            if ratio_n < th2:
+                name.append(temp_n)
+    return (factory, name)
+
+# 获取所有厂牌
+def allfactory(total, th1, th2):
+    totalfactory = []
+    totalname = []
+    init_f = 1
+    init_n = 1
+    for i in range(total):
+        temp_f, temp_n = separatedfactory(i, th1, th2)
+        for val in temp_f:
+            ratio_f = 0
+            if init_f:
+                totalfactory.append(val)
+                #print(val)
+                init_f = 0
+            else:
+                for j in totalfactory:
+                    r = compare_str(j, val)
+                    ratio_f = max(ratio_f, r) 
+                if ratio_f < th1:
+                    totalfactory.append(val) 
+                    #print(val)
+        for val in temp_n:
+            ratio_n = 0
+            if init_n:
+                totalname.append(val)
+                #print(val)
+                init_n = 0
+            else:
+                for j in totalname:
+                    r = compare_str(j, val)
+                    ratio_n = max(ratio_n, r) 
+                if ratio_f < th2:
+                    totalname.append(val) 
+                    #print(val)
+    totalfactory.sort()
+    totalname.sort()
+    return (totalfactory, totalname)       
+        
 
 # 帮助run Maldives5.2.0.py --help
 if __name__ == '__main__':
     
-    factory = []
-    names = []
-    
-    
-    
-    
-    types =[]
-    sizes = []
-    # 查找index
-    with open("detail.csv", 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            temp = row['型号']
-            temp_list = temp.split('-')
-            temp = ''
-            for i in range(len(temp_list) - 1):
-                if i == 0:
-                    temp += temp_list[i]
-                else:
-                    temp += '-' + temp_list[i]
-            types.append(temp)
-            temp = row['Outer Dimension (mm):']
-            sizes.append(temp)            
-            
-    type_id = 0
-    type_store = []
-    for i, val in enumerate(types):
-        if i == 0:
-            type_store.append(type_id)
-        else:
-            ratio1 = compare_str(types[i - 1], types[i])
-            ratio2 = compare_str(sizes[i - 1], sizes[i])
-            if ratio1 < 0.85 or ratio2 < 0.98:
-                type_id += 1
-            type_store.append(type_id)
-                
-    with codecs.open('大小型号归类.csv',"w",'utf_8_sig') as f:
-        writer_a = csv.writer(f)
-        for i, val in enumerate(types):
-            row = []
-            row.append(val)
-            row.append(type_store[i])
-            writer_a.writerow(row)
-        f.close()         
+    total = 4
+    th1 = 0.98
+    th2 = 0.98
+    totalfactory, totalname = allfactory(total, th1, th2)
+         

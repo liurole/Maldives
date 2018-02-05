@@ -129,7 +129,7 @@ def get_urls(url):
             if temp.endswith('Under development'):
                 pdf_urls.append('')
             else:
-                pdf_urls.append('http://www.shindengen.co.jp/' + temp)
+                pdf_urls.append('http://www.shindengen.co.jp' + temp)
             
 
 # 得到所有特性

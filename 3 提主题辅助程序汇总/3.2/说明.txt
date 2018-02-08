@@ -1,0 +1,3 @@
+3.2用来生成所有文件（detail与web），肯定要第一个运行，用来保存汇总页详情以及详情与pdf子链接 
+之后利用详情链接生成search_web.xlsx文件
+3.2.2利用search_web.xlsx文件，得到产品详情页的表格与特性信息，得到feature与table文件

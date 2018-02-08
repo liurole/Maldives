@@ -111,7 +111,7 @@ def get_all(url):
         f.close()           
     
 
-# 得到所有子链接
+# 得到详情与pdf子链接
 def get_urls(url):
 
     html = requests.get(url)
@@ -132,7 +132,7 @@ def get_urls(url):
                 pdf_urls.append('http://www.shindengen.co.jp' + temp)
             
 
-# 得到所有特性
+# 得到参考页面所有特性
 def get_details(url):
 
     html = requests.get(url)
@@ -154,17 +154,16 @@ def get_details(url):
                 string = str(val.get_text())
                 if string.startswith('new'):
                     string = string.split('!')
-                    row.append(string[1])
-                    names.append(string[1])
+                    row.append(string[1])           # 保存型号名字，去除new
+                    names.append(string[1])         # 保存型号名字，去除new
                 else:
                     row.append(string)
                     names.append(string)                    
             elif i % num > 2 and i % num < num - 1:
                 row.append(val.get_text())
             elif i % num == num - 1:
-                writer.writerow(row)
-                row = []                
-                
+                writer.writerow(row)                # 最后一列不保存
+                row = []                        
         f.close()
 
 # 帮助run Maldives3.2.py --help
@@ -185,23 +184,23 @@ def get_details(url):
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], 'hc:s:n:', [ 'help', 'category=', 'sub_id=' ])
 
+    # 输入变量
     category = '01'
     sub_id = '04'
     num = 15
     web_p = 'http://www.shindengen.co.jp/product_e/semi/search_NEW.php?'
     
+    # 输出文件
     file_detail = 'detail.csv'
     file_web = 'web.csv'
-    file_table = 'table.csv'
-    file_feature = 'feature.csv'
     file_dir = './v3.2/'
     
+    # 储存变量
     names = []
     sub_urls = []
     pdf_urls = []
     
     for key, value in opts:
-
         if key in ['-h', '--help']:
             print('马尔代夫V3.2')
             print('参数定义：')
@@ -217,17 +216,18 @@ if __name__ == '__main__':
         if key in ['-n', '--num']:
             num = int(value)
 
+    # 信息输出
     print('马尔代夫V3.2\tCategory ID:', category, '\tSub ID:', sub_id) 
-    
     web_a = web_p + 'category_id=' + category + '&sub_id=' + sub_id
     print(web_a)
     
+    # 获取该汇总页面的所有信息
     get_details(web_a)
 
-    
+    # 得到详情与pdf子链接    
     get_urls(web_a)
     
-    # 存储特性
+    # 存储详情与pdf子链接 
     with codecs.open(file_dir + file_web,"w",'utf_8_sig') as f:
         writer = csv.writer(f)
         for i in range(0, len(names)):
@@ -236,7 +236,6 @@ if __name__ == '__main__':
             temp.append(sub_urls[i])
             temp.append(pdf_urls[i])
             writer.writerow(temp)
-        
         f.close()    
     
 #    index = 0

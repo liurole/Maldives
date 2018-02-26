@@ -167,7 +167,9 @@ if __name__ == '__main__':
     temp1 = temp1.replace('YYY', (out_size + '（单位mm）'))
     temp2 = pl3[1].replace('XXX', pick['TRR'])
     temp2= temp2.replace('YYY', pick['结温'])
-    temp2= temp2.replace('ZZZ', pick['保存温度'])
+    temp_s = pick['保存温度']
+    temp_s = temp_s.replace('to', '至')
+    temp2= temp2.replace('ZZZ', temp_s)
     p3 = temp1 + temp2
     
 #    # 测试输出结果 

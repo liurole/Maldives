@@ -182,11 +182,17 @@ if __name__ == '__main__':
     # 正文输入
     browser.switch_to.frame('ueditor_0')  # 注意，这种editor一定有frame，一定要切frame
     MyContent_content = ''
+    bapp = 0
     for i, val in enumerate(para):
         if val == '':
             MyContent_content += '\n'
         else:
-            MyContent_content += val + '\n'
+            if bapp:
+                MyContent_content += '• ' + val + '\n'
+            else:
+                MyContent_content += val + '\n'
+        if '的典型应用' in val:
+            bapp = not bapp        
     MyContent_content += '\n世强元件电商版权所有，转载请注明来源及链接。'
     browser.find_element_by_tag_name('body').send_keys(MyContent_content)
     browser.switch_to.default_content()

@@ -42,6 +42,7 @@ def detect(url):
     print(codedetect)
     fp.close()
 
+# 修改温度格式
 def selector(t):
     bChange = 0
     if 'ã' in t:
@@ -52,7 +53,7 @@ def selector(t):
     return t, bChange
 
 
-# 得到所有细节
+# 得到每个产品详情页信息
 def get_all(url, num):
     html = requests.get(url)
     html.encoding ='utf-8'

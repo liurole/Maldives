@@ -1,7 +1,33 @@
 1.首先世强规则要发生变化，因而这个月有多大力气就来多少了
+
 2.截止现在，共完成0121/10篇，0127/11篇，0128/10篇京瓷
 	    共完成0203/15篇，0204/10篇新电元
 	    共完成0206/9篇新电元，0207/8篇京瓷，0208/9篇京瓷
 	    共计82篇，有一篇EOL，预计中78篇250元稿酬，19500元
+
 3.剩余5篇京瓷，第一次测试提交，下个月再写
-4.
+
+4.整理了一下剩余新电元产品，有一个一般整流二极管，感觉可以不写了；
+还剩MOSFET、双向晶闸管、单向晶闸管、桥式整流二极管
+
+5.V5.6.0实现了汇总页面详情的保存，同时存储产品详情页与pdf的链接，生成detail与web的csv文件
+分别运行：
+run Maldives5.6.0.py -c 03 -s 01 -n 13
+run Maldives5.6.0.py -c 04 -s 01 -n 10
+run Maldives5.6.0.py -c 04 -s 02 -n 10
+run Maldives5.6.0.py -c 01 -s 03 -n 14
+
+6.将web文件中的产品详情页链接复制出来，然后另存为search_web.xlsx，之后调用V5.6.1程序，得到table与feature的csv文件。需要注意的是，有的详情页table带有温度单位，编码问题使得需要进一步处理（63行附近）
+ID (A) PT (W) Polarity RDS(on) (typ) (Ω) Tch (℃) VDSS (V) VGSS (V)	MOSFET
+Condition Pulse Width Condition Tl (℃) Condition f (Hz) IT (A) ITRM (A) ITSM (A) Tj (℃) Tstg (℃) VDRM (V) diT/dt (A/μs)	双向晶闸管
+Condition Pulse Width Condition Tl (℃) Condition f (Hz) IT (A) ITRM (A) ITSM (A) Tj (℃) Tstg (℃) VDRM (V) diT/dt (A/μs)	单向晶闸管
+Condition Ta (℃) Condition Tc (℃) IF (A) IFSM (A) Tj (℃) Tstg (℃) VRRM (V)	桥式整流二极管
+
+7.V5.6.2实现了查找是否审核通过
+
+8.V5.6.3实现了基于型号、size以及超链接的分类
+
+9.V5.6.4实现了pdf的批量下载
+
+
+

@@ -11,6 +11,7 @@ http://www.seleniumhq.org/download/ 找到Google Chrome Driver链接
 """
 import requests
 import re
+import xlrd
 import urllib
 import hashlib
 import random
@@ -19,6 +20,25 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH 
 from docxtpl import DocxTemplate
 from bs4 import BeautifulSoup
+
+def open_excel(file):  
+    data = xlrd.open_workbook(file)  
+    return data
+
+def excel_table_byindex(file, colnameindex = 0, by_index = 0):  
+    data = open_excel(file)  
+    table = data.sheets()[by_index]  
+    nrows = table.nrows #行数   
+    colnames = table.row_values(colnameindex) #某一行数据  
+    list = []  
+    for rownum in range(1,nrows):  
+        row = table.row_values(rownum)#以列表格式输出  
+        if row:  
+            app = {}  
+            for i in range(len(colnames)):  
+                app[colnames[i]] = row[i]  
+            list.append(app)#向列表中插入字典类型的数据  
+    return list 
 
 def baidu_fanyi(q: str, fro: str = 'auto', to: str = 'zh', timeout: int = 5):
     """
@@ -102,86 +122,52 @@ def check(url):
         print('Error occurred')
         return None
 
-# 获取所有搜索结果链接
-def get_all_urls(html):
-    names = []
-    urls = []
-    soup = BeautifulSoup(html, 'lxml')
-    result = soup.select('#archive .strong a')
-    if len(result) == 0:
-        return names, urls
-    else:
-        for i in result:
-            temp = i.get('href')
-            urls.append('https://www.planetanalog.com' + temp)
-            temp = i.get_text()
-            names.append(temp)
-        return names, urls
-
 # 保存所有页面
 def search_all_urls(url):
     response = check(url)
-    result =re.search('<div class="grayshowlinks bigsmall" style="margin-bottom: 14px;">.*<div class="divsplitter" style="height: 1px;"></div>', response, re.S)
-    result = result.group()
-    # 得到标题，段落，图片
     soup = BeautifulSoup(response, 'lxml')
-    title = soup.select('#thedoctop .biggest')
+    title = soup.select('#hs_cos_wrapper_name')
     temp = title[0].get_text()
-    temp_ch = baidu_fanyi(temp)
-    temp_ch = temp_ch['trans_result'][0]['dst']
+    temp_baidu = baidu_fanyi(temp)
+    temp_baidu = temp_baidu['trans_result'][0]['dst']
+    temp_youdao = youdao_fanyi(temp)
+    temp_youdao = temp_youdao['translation']
     doc = DocxTemplate('templet.docx')
     context = {
         'MyTitle1' : temp ,
-        'MyTitle2' : temp_ch
+        'MyTitle2' : temp_baidu ,
+        'MyTitle3' : temp_youdao
     }
+    
     file_name = re.sub('[^A-Za-z\s]','',temp) + '.docx'
     doc.render(context)
     doc.save("generated_temp.docx")
     
-    paras = re.findall('<p.*?>(.*?)</p>', result)
-    pics = re.findall('<img class="docimage" src="(.*?)" alt', result)
-    
-    doc = Document("generated_temp.docx")
-    index = 0
-    for para in paras:
-        if '<b>' in para:
-            temp = pics[index]
-            temp_split = temp.split('.')
-            file = 'temp.' + temp_split[-1]
-            urllib.request.urlretrieve(temp, file)
-            index += 1
-            doc.add_picture(file)
-            
-            temp = re.search('>(.*)<', para)
-            if temp is not None:
-                para = temp.group(1)                
-            temp_ch = baidu_fanyi(para)
-            temp_ch = temp_ch['trans_result'][0]['dst']
-            picname = '图' + str(index) + ': '
-            p1 = doc.add_paragraph(picname + para)
-            p1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER 
-            p2 = doc.add_paragraph(picname + temp_ch)   
-            p2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER 
-            doc.add_paragraph('')
-            
-        else:
-            para = re.sub('<.*?>', '', para)              
-            temp_ch = baidu_fanyi(para)
-            temp_ch = temp_ch['trans_result'][0]['dst']
-            doc.add_paragraph(para)
-            doc.add_paragraph(temp_ch)    
-            doc.add_paragraph('')
-               
+    paras = soup.select('#hs_cos_wrapper_post_body p')
+    for i in paras:
+        temp = i.get_text()
+        temp_baidu = baidu_fanyi(temp)
+        temp_baidu = temp_baidu['trans_result'][0]['dst']
+        temp_youdao = youdao_fanyi(temp)
+        temp_youdao = temp_youdao['translation']
+        
+        doc.add_paragraph(temp)
+        doc.add_paragraph('--------------------------------------------------')
+        doc.add_paragraph(temp_baidu)
+        doc.add_paragraph('--------------------------------------------------')
+        doc.add_paragraph(temp_youdao)   
+        doc.add_paragraph('')
+
     doc.save(file_name)              
     print(file_name + '------Done!')
 
 if __name__ == '__main__':
     
-    url = 'https://www.planetanalog.com/archives.asp?blogs=yes'
-    html = check(url)
-    names, urls = get_all_urls(html)
+    tables = excel_table_byindex('刘晨-主题提交 - 2月11日.xlsx', 0, 1) 
     
-    for i in urls:
-        search_all_urls(i)
+    for i in tables:
+        url = i['参考链接']
+        search_all_urls(url)
+
     
     

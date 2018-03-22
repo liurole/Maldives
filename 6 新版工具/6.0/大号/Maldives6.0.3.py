@@ -159,12 +159,12 @@ if __name__ == '__main__':
     
     # 读取Excel，同时合并同一序号，序号编号需要连续
     file = '选型.xlsx'
-    results = excel_table_byindex(file, 2)
+    results = excel_table_byindex(file, 3)
     sorted_results = sort_table(results)
 
     # 依次提交
     for key, value in sorted_results.items():
-        if key > 1:
+        if key > 14:
             state = submit(browser, value, url)
             if state == 404:
                 break

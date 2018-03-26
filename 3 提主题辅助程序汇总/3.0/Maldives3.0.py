@@ -20,6 +20,7 @@ g_dict = {}
 
 # 获取所有字典并生成表头
 def get_all_dict():
+    index_print = 1
     for url in urls:
         # 获取网页
         html = requests.get(url).text
@@ -41,6 +42,9 @@ def get_all_dict():
         global g_dict
         for key, value in content.items():
             g_dict[key] = value
+        
+        print(index_print)
+        index_print += 1
         
         # 存储表头
         with open(file_table, 'w', newline='') as f:
@@ -140,8 +144,11 @@ if __name__ == '__main__':
     get_all_dict()
     
     # 保存数据
+    index_print = 1
     for url in urls:
         save_csv(url)
+        print(index_print)
+        index_print += 1
     
     
 

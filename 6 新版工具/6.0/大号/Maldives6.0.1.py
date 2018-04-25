@@ -150,7 +150,7 @@ def submit(browser, data, url):
                 versions += ',' + val['型号']
                 dates += '/' + str(val['判断为新文章的理由'])
         else:
-            print(val['型号'])
+            print(val['型号'] + '\trepeated' + '\t请留意')
     if versions == '':
         return -1
     dates = '数据手册形成时间为' + str(dates) + '，世强官网尚未有此型号文章。'
@@ -158,7 +158,7 @@ def submit(browser, data, url):
     print('形成时间\t' + dates)
     
     # 参考链接一个是翻译，多个是改写(大幅度的整理以及自己的分析整理)
-    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/div/form/div[1]/div/div/div/div[2]/div/div/label[2]/span[1]/input').click()
+    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/form/div[1]/div/div/div/div[2]/div/span/div/label[2]/span[1]/input').click()
     
     # 原文链接
     url = browser.find_element_by_id('originalUrl')
@@ -185,19 +185,14 @@ def submit(browser, data, url):
     name.send_keys(versions)
     
     # 理由
-    reason = browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/div/form/div[6]/div/div/div/div[2]/div/textarea')
+    reason = browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/form/div[6]/div/div/div/div[2]/div/span/textarea')
     reason.send_keys(dates)
     
     # 新产品类型
-    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/div/form/div[7]/div/div/div/div[2]/div/div/label[1]/span[1]').click()
+    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/form/div[7]/div/div/div/div[2]/div/span/div/label[1]/span[1]/input').click()
     
-    pick = input("是否检查完毕？ y/n:")
-    if pick == 'y':
-#        # 提交
-#        browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/div/form/div[8]/div/div/div/div/div/button[2]').click()
-        print('next')
-    else:
-        return 404
+    # 查重
+    browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div[2]/div/div/div/div/form/div[8]/div/div/div/div/div/span/button[1]').click()
         
     return 1
     
@@ -213,7 +208,7 @@ if __name__ == '__main__':
     name.send_keys('15244608508')
     password = browser.find_element_by_id('password')
     password.send_keys('liu875288')
-    button = browser.find_element_by_xpath('//*[@id="root"]/div/div/div[2]/div/div[1]/div/div/div/div[2]/div/form/div[3]/div/button')
+    button = browser.find_element_by_xpath('//*[@id="root"]/div/div/div[2]/div/div[1]/div/div/div/div[2]/form/div[3]/div/button')
     button.click()
     
     # 切换到提主题页面
@@ -221,12 +216,16 @@ if __name__ == '__main__':
     
     # 读取Excel，同时合并同一序号，序号编号需要连续
     file = '新产品.xlsx'
-    results = excel_table_byindex(file, 0)
+    results = excel_table_byindex(file, 3)
     sorted_results = sort_table(results)
 
     # 依次提交
     for value in sorted_results.values():
         state = submit(browser, value, url)
-        if state == 404:
+        pick = input("是否已手动提交？ y/n:")
+        if pick == 'y':
+            print('next')
+        else:
             break
+
                

@@ -216,7 +216,7 @@ if __name__ == '__main__':
     
     # 读取Excel，同时合并同一序号，序号编号需要连续
     file = '新产品.xlsx'
-    results = excel_table_byindex(file, 3)
+    results = excel_table_byindex(file, 4)
     sorted_results = sort_table(results)
 
     # 依次提交

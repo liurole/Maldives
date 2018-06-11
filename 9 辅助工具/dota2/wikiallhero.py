@@ -12,6 +12,7 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from urllib.parse import urlencode
+from lxml.cssselect import CSSSelector
 
 def get_info():
     url = 'https://dota2.gamepedia.com/Equipment'
@@ -24,32 +25,85 @@ def get_info():
         print('Error occurred')
         return None
 
-def get_links(html):
-    
-    
-    
-    
-    
-    
-    soup = BeautifulSoup(html, 'lxml')
-    result = soup.select('.heroentry img')
-    for i in result:
-        temp = i.get('href')
-        print(temp)
-    
-    
-    
-    
-    if len(result) == 0:
-        return names, urls
-    else:
-        for i in result:
-            temp = i.get('href')
-            urls.append(temp)
-            temp = i.get_text()
-            names.append(temp)
-        return names, urls
+def cut(html):
+    result =re.search('<div class="heroentry">(.*?)</td></tr></table>', html, re.S)
+    content = result.group(1)
+    return content
 
+def get_links(content):
+    link = re.findall('<a href="(.*?)" title', content, re.S)
+    links = []
+    names = []
+    for i in link:
+        if 'Equipment' in i:
+            links.append('https://dota2.gamepedia.com' + i)
+            temp = i.split('/')
+            names.append(temp[1])
+    return links, names
+    
+def read_link(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.text
+        return None
+    except ConnectionError:
+        print('Error occurred')
+        return None
+    
+#def get_data(html):    
+#    sets = []
+#    data = []
+#    result =re.search('Sets</td>(.*?)</div></div></td></tr>', html, re.S)
+#    if result == None:
+#        return -1
+#    else:
+#        setsdata = result.group(1)
+#        temp = re.findall('<a href="(.*?)" title', setsdata, re.S)
+#        index = 0
+#        for i in temp:
+#            if index % 2 == 0:
+#                sets.append(re.sub('_', ' ', i))
+#            index += 1
+#    
+#    soup = BeautifulSoup(html, 'lxml')
+#    result = soup.select('.cosmetic-label a')  
+#    index = 0
+#    for i in result:
+#        temp = i.get('title')
+#        if index % 2 == 0:
+#            data.append(temp)
+#        index += 1
+    
+def get_data(html):    
+    sets = []
+    data = []
+    result =re.search('Sets</td>(.*?)</div></div></td></tr>', html, re.S)
+    if result == None:
+        return sets, data
+    else:
+        setsdata = result.group(1)
+        soup = BeautifulSoup(setsdata, 'lxml')
+        result = soup.select('.cosmetic-label a')  
+        index = 0
+        for i in result:
+            temp = i.get('title')
+            if index % 2 == 0:
+                sets.append(temp)
+            index += 1  
+
+        soup = BeautifulSoup(html, 'lxml')
+        result = soup.select('.cosmetic-label a')  
+        index = 0
+        for i in result:
+            temp = i.get('title')
+            if index % 2 == 0:
+                data.append(temp)
+            index += 1    
+            
+        return sets, data
+    
+def 
 
 
 

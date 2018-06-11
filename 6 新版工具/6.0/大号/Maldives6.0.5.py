@@ -84,8 +84,8 @@ def excel_table_byindex(colnameindex = 0, by_index = 0):
 if __name__ == '__main__':
     opts, args = getopt.getopt(sys.argv[1:], 'hi:', [ 'help', 'index=' ])
     
-    index = [55,56,57]
-    #index = 54
+    #index = [1,3]
+    index = 17
     
     # 入口函数，不明白怎么调用参数的可以看下
     for key, value in opts:

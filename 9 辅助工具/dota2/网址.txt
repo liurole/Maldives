@@ -1,0 +1,72 @@
+https://steamcommunity.com/inventory/76561198129439885/570/2?l=schinese&count=2000&start_assetid=7419925460
+http://steamcommunity.com/profiles/76561198129439885/inventory/json/570/<CONTEXTID>
+
+https://steamcommunity.com/inventory/76561198129439885/570/2?l=schinese&count=5000
+
+大概通过上面这个函数调用，但是一次最多5000个，我的已经超出了，建议方法是读最后一个的assetid，然后作为start_assetid，于是有了：
+https://steamcommunity.com/inventory/76561198129439885/570/2?l=schinese&count=5000&start_assetid=11744278020
+
+同时不用注意去重，他直接算的下一个
+
+"assets":[
+
+{"appid":570,"contextid":"2","assetid":"7281083998","classid":"782635269","instanceid":"778285303","amount":"1"}
+
+"descriptions":
+
+{"appid":570,"classid":"782635269","instanceid":"778285303","currency":0,"background_color":"","icon_url":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXX7gNTPcU8q0oIc0_YRvag6MnBUlp5IApD-Lvzf1Vh0fbJdTsSuoWzwNCIxPOsa-nQxmhSsMdy27rCrIr00VWw-0pyIzekLRVEFL8","icon_url_large":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXX7gNTPcU8q0oIc0_YRvag6MnBUlp5IApDibakOQBlnaHKdGkR6YzuzdjfxvatYr6EwzIGupQp072Uodn03QS1qkZpZGCiI4OLMlhpp6AZcZU","descriptions":[{"type":"html","value":"其实没多大用处，但是能用于下一次轮回！"},{"type":"html","value":"（不可交易）"}],"tradable":0,"name":"护符碎片","name_color":"D2D2D2","type":"稀有 护符碎片","market_name":"护符碎片","market_hash_name":"Charm Fragment","commodity":0,"market_tradable_restriction":7,"market_marketable_restriction":0,"marketable":0,"tags":[{"category":"Quality","internal_name":"unique","localized_category_name":"品质","localized_tag_name":"Standard","color":"D2D2D2"},{"category":"Rarity","internal_name":"Rarity_Rare","localized_category_name":"稀有度","localized_tag_name":"稀有","color":"4b69ff"},{"category":"Type","internal_name":"tool","localized_category_name":"类型","localized_tag_name":"工具"},{"category":"Slot","internal_name":"none","localized_category_name":"槽位","localized_tag_name":"无"},{"category":"Hero","internal_name":"DOTA_OtherType","localized_category_name":"英雄","localized_tag_name":"其它"}]}
+
+{"appid":570,"classid":"1016788164","instanceid":"2561241259","currency":0,"background_color":"","icon_url":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXK9QlSPcUgvBlUT0efQeu_w9rdVklxKQhSpIW2Iwh13_fNY3JE486igY6Og_L4P77DqXhZ59B9juzTu9ug3wDs_kZlZDuhd9CWcwQ6ZVrS-ALvx-vsh5bu6ZybyiNluilz5nbD30vg7cFbYOI","icon_url_large":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXK9QlSPcUgvBlUT0efQeu_w9rdVklxKQhSpIW2Iwh13_fNY3JE486igY6Og_L4P77DqXhZ59B9juzTyoD0mlOx5RI_ajr0doadJwQ7Yg6BqAK6kr28gsS7vJjNz3tmviR3syqJlhywgUtSLrs4dZhxbUA","descriptions":[{"type":"html","value":"使用英雄：拉比克"},{"type":"html","value":" "},{"type":"html","value":"巧诈占卜师衣饰","color":"9da1a9"},{"type":"html","value":"巧诈占卜师斗篷","color":"6c7075"},{"type":"html","value":"巧诈占卜师法杖","color":"6c7075"},{"type":"html","value":"巧诈占卜师高帽","color":"6c7075"},{"type":"html","value":"巧诈占卜师披风","color":"6c7075"},{"type":"html","value":" "},{"type":"html","value":"（）"},{"type":"html","value":"<div style=\"white-space: nowrap; margin: 10px\"><div style=\"white-space: nowrap; padding: 3px;\"><div style=\"width: 60px; height: 32px; vertical-align: top; display: inline-block;\"><div style=\"position: relative; width: 48px; height: 32px; vertical-align: top; display: inline-block; border: 2px solid rgb(255, 255, 255);\"><div style=\"position: absolute; width: 48px; height: 32px; vertical-align: top; display: inline-block; background-size: contain; background-image: url(https://steamcdn-a.akamaihd.net/apps/570/icons/econ/sockets/gem_stat.30d7935c1f0a1b9e8e28c691c2bd28f7d5f471bc.png)\"></div></div></div><div style=\"vertical-align: top; display: inline-block; margin-left: 12px padding: 2px\"><span style=\"font-size: 18px; white-space: normal; color: rgb(255, 255, 255)\">胜利：3</span><br><span style=\"font-size: 12px\">铭刻宝石</span></div></div></div>"}],"tradable":0,"name":"铭刻 巧诈占卜师斗篷","name_color":"CF6A32","type":"稀有 斗篷","market_name":"铭刻 巧诈占卜师斗篷","market_hash_name":"Inscribed Mantle of the Cunning Augur","commodity":0,"market_tradable_restriction":7,"market_marketable_restriction":0,"marketable":0,"tags":[{"category":"Quality","internal_name":"strange","localized_category_name":"品质","localized_tag_name":"铭刻","color":"CF6A32"},{"category":"Rarity","internal_name":"Rarity_Rare","localized_category_name":"稀有度","localized_tag_name":"稀有","color":"4b69ff"},{"category":"Type","internal_name":"wearable","localized_category_name":"类型","localized_tag_name":"可佩带"},{"category":"Slot","internal_name":"shoulder","localized_category_name":"槽位","localized_tag_name":"肩部"},{"category":"Hero","internal_name":"npc_dota_hero_rubick","localized_category_name":"英雄","localized_tag_name":"拉比克"}]}
+
+{"appid":570,"classid":"2307935192","instanceid":"2411979912","currency":0,"background_color":"","icon_url":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXP7g1bJ4Q1lgheXknVSffi08rWQ2JnIAVopLWnJBNf1_bNYQJR6d2Jho-JmOPLP7TQkmJf7_piifvE8IK731CxqUJrMWmiINKQewFsM1DV8lPtlLvqh5Tt7sjBznU37iZ27CmOywv3308rB1mM0Q","icon_url_large":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXP7g1bJ4Q1lgheXknVSffi08rWQ2JnIAVopLWnJBNf1_bNYQJR6d2Jho-JmOPLP7TQkmJf7_piifvE8ILKhFWmrBZyYGulJIOSdAJtaVzYrFe3xuq718Ltu5TJznFgu3FztyvbyRey1RlEbPsv26JEZeYAlw","descriptions":[{"type":"html","value":"使用英雄：修补匠"},{"type":"html","value":"2017年国际邀请赛","color":"99ccff"},{"type":"html","value":"包含修补匠的“湮灭危机”套装，更有载入画面相赠。"},{"type":"html","value":" "},{"type":"html","value":"（）"},{"type":"html","value":"（）"}],"tradable":0,"name":"湮灭危机","name_color":"D2D2D2","type":"神话 套装","market_name":"湮灭危机","market_hash_name":"Submerged Hazard","commodity":0,"market_tradable_restriction":7,"market_marketable_restriction":0,"marketable":0,"tags":[{"category":"Quality","internal_name":"unique","localized_category_name":"品质","localized_tag_name":"Standard","color":"D2D2D2"},{"category":"Rarity","internal_name":"Rarity_Mythical","localized_category_name":"稀有度","localized_tag_name":"神话","color":"8847ff"},{"category":"Type","internal_name":"bundle","localized_category_name":"类型","localized_tag_name":"捆绑包"},{"category":"Slot","internal_name":"none","localized_category_name":"槽位","localized_tag_name":"无"},{"category":"Hero","internal_name":"npc_dota_hero_tinker","localized_category_name":"英雄","localized_tag_name":"修补匠"}]}],"more_items":1,"last_assetid":"11744278020","total_inventory_count":7342,"success":1,"rwgrsn":-2}
+
+
+{"appid":570,"classid":"560564699","instanceid":"0","currency":0,"background_color":"","icon_url":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXK9QlSPcUgvBlUT0efT-W_28rCRlR6GhNSt6qqJUho0uHEdCxX5dKJg4WKh_j6fe3SkmhUv5Ik37-R9o-s0Qzl-EZlYjumctPAelU8NA6FrFa_kO681J-i_MOeasmNfq0","icon_url_large":"-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXK9QlSPcUgvBlUT0efT-W_28rCRlR6GhNSt6qqJUho0uHEdCxX5dKJg4WKh_j6DLfQhGxUppMi3O2X8d33jVfj_BJvMW2icIGcIA8_M1zTq1foxue7gp-6vsvBmnF9-n51Gl0jexY","descriptions":[{"type":"html","value":"使用英雄：拉比克"},{"type":"html","value":" "},{"type":"html","value":"小丑华服","color":"9da1a9"},{"type":"html","value":"小丑披风","color":"6c7075"},{"type":"html","value":"小丑之冠","color":"6c7075"},{"type":"html","value":"小丑之傲","color":"6c7075"},{"type":"html","value":"小丑斗篷","color":"6c7075"},{"type":"html","value":"包含模型和攻击弹道的粒子特效，特殊的攻击动作和一个技能图标。"}],"tradable":1,"name":"小丑之傲","name_color":"D2D2D2","type":"神话 法杖","market_name":"小丑之傲","market_hash_name":"Conceit of the Wandering Harlequin","commodity":0,"market_tradable_restriction":7,"market_marketable_restriction":0,"marketable":1,"tags":[{"category":"Quality","internal_name":"unique","localized_category_name":"品质","localized_tag_name":"Standard","color":"D2D2D2"},{"category":"Rarity","internal_name":"Rarity_Mythical","localized_category_name":"稀有度","localized_tag_name":"神话","color":"8847ff"},{"category":"Type","internal_name":"wearable","localized_category_name":"类型","localized_tag_name":"可佩带"},{"category":"Slot","internal_name":"weapon","localized_category_name":"槽位","localized_tag_name":"武器"},{"category":"Hero","internal_name":"npc_dota_hero_rubick","localized_category_name":"英雄","localized_tag_name":"拉比克"}]}],
+"total_inventory_count":7342,"success":1,"rwgrsn":-2}
+
+
+"appid":570,"contextid":"2","assetid":"7281083998","classid":"782635269","instanceid":"778285303","amount":"1"
+
+
+appid
+classid	
+instanceid
+currency	+
+background_color
+icon_url
+icon_url_large
+descriptions
+	type
+	value
+	type
+	value
+	type
+	value
+tradable	+
+name	+
+name_color
+type
+market_name	+
+market_hash_name	+
+commodity	+
+market_tradable_restriction	+
+market_marketable_restriction	+
+marketable	+
+tags
+	category
+	internal_name
+	localized_category_name
+	localized_tag_name
+	category
+	internal_name
+	localized_category_name
+	localized_tag_name
+more_items
+last_assetid
+total_inventory_count
+success
+rwgrsn
+
+https://steamcommunity.com/profiles/76561198129439885/inventory/json/570/2
+
+

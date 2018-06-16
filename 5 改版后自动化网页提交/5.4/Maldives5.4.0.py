@@ -53,7 +53,7 @@ if __name__ == '__main__':
             print('-h, --help\t实现了同类产品大小型号的合并')
             sys.exit(0)    
     
-    tables = excel_table_byindex('detail.xlsx', 0, 3) 
+    tables = excel_table_byindex('detail.xlsx', 0, 0) 
     
     types =[]
     sizes = []

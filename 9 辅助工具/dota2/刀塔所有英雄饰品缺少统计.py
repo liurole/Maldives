@@ -23,12 +23,39 @@ if __name__ == '__main__':
     result_own = pd.read_excel(file)
     name_own = result_own['市场英文名称'].tolist()
     
+    name_new = []
+    for i in name_own:
+        if type(i) == float:
+            name_new.append('')
+        else:
+            if 'Auspicious 'in i:
+                name_new.append(i[11:].lower())
+            elif 'Cursed ' in i:
+                name_new.append(i[7:].lower())
+            elif 'Frozen ' in i:
+                name_new.append(i[7:].lower())
+            elif 'Infused ' in i:
+                name_new.append(i[8:].lower())
+            elif 'Inscribed ' in i:
+                name_new.append(i[10:].lower())
+            elif 'Heroic ' in i:
+                name_new.append(i[7:].lower())
+            elif 'Autographed ' in i:
+                name_new.append(i[12:].lower())
+            elif 'Exalted ' in i:
+                name_new.append(i[8:].lower())
+            elif 'Unusual ' in i:
+                name_new.append(i[8:].lower())
+            else:
+                name_new.append(i.lower())
+            
+    
     # 创建一个空的 DataFrame  
     df_own = pd.DataFrame(columns=['拥有'])  
     
     for index in result_web.index:
-        temp = result_web['物品名称'][index]
-        if temp in name_own:
+        temp = result_web['物品名称'][index].lower()
+        if temp in name_new:
             df_own.loc[index] = 1
         else:
             df_own.loc[index] = 0

@@ -52,12 +52,18 @@ def get_info(temp):
     else:
         content = json.loads(html)
         data['市场可交易'] = 1
-        if 'median_price' in data.keys():
-            data['平均价格'] = content['median_price']
+        if 'median_price' in content.keys():
+            temp_content = content['median_price']
+            if '¥ ' in temp_content:
+                temp_content = re.sub('¥ ', '', temp_content)
+            data['平均价格'] = temp_content
         else:
             data['平均价格'] = 666
-        if 'lowest_price' in data.keys():
-            data['最低价格'] = content['lowest_price']
+        if 'lowest_price' in content.keys():
+            temp_content = content['lowest_price']
+            if '¥ ' in temp_content:
+                temp_content = re.sub('¥ ', '', temp_content)
+            data['最低价格'] = temp_content
         else:
             data['最低价格'] = 666
            
@@ -75,8 +81,8 @@ if __name__ == '__main__':
     num = 1
     
     for index in result_web.index:
-        if index > 4299 and index < 5300:
-            time.sleep(2)
+        if index > 1365 and index < 6530:
+            time.sleep(3)
             if np.asscalar(result_web['拥有'][index]) == 0:
                 temp = result_web['物品名称'][index]
                 data = get_info(temp)
@@ -84,7 +90,7 @@ if __name__ == '__main__':
                 df.loc[index, '平均价格'] = data['平均价格']
                 df.loc[index, '最低价格'] = data['最低价格']
                 time_end = time.time()
-                print(temp + '  ' + str(num) + '/' + str(len(result_web)) + '  ' + str(time_end - time_start))
+                print(temp + '  ' + str(num) + '/' + str(len(result_web)) + '  ' + str(data['最低价格']) + '  ' + str(time_end - time_start))
             else:
                 df.loc[index, '市场可交易'] = -1
                 df.loc[index, '平均价格'] = -1

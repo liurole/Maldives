@@ -204,9 +204,10 @@ if __name__ == '__main__':
     name.send_keys('15244608508')
     password = browser.find_element_by_id('password')
     password.send_keys('liu875288')
-    time.sleep(1)
+    time.sleep(2)
     button = browser.find_element_by_xpath('//*[@id="root"]/div/div/div[2]/div/div[1]/div/div/div/div[2]/form/div[3]/div/button')
     button.click()
+    time.sleep(2)
     
     # 切换到提主题页面
     url = 'https://cms.sekorm.com/content/nps/selfSubject/add'

@@ -44,6 +44,7 @@ if __name__ == '__main__':
     results = excel_table_byindex(file, 0)
     num = 0
     data = []
+    ids = []
     while num < 30:
         temp_num = random.randint(0, len(results) - 1)
         ref_data = []
@@ -54,6 +55,7 @@ if __name__ == '__main__':
                     if i['url'] == '':
                         is_empty = 1
                     ref_data.append(i)
+                    ids.append(i['序号'])
                     i['post'] = 1
         if len(ref_data) != 0 and is_empty == 0:
             data.append(ref_data)
@@ -62,7 +64,6 @@ if __name__ == '__main__':
     wb_out = openpyxl.Workbook()
     ws_out = wb_out.active
     ws_out.title = '30篇提交'
-    ws_out.title = '京瓷肖特基'
     ws_out['A1'] = '序号'
     ws_out['B1'] = '类型'
     ws_out['C1'] = 'name'
@@ -77,7 +78,7 @@ if __name__ == '__main__':
     ws_out['L1'] = 'AEC-Q101'
     ws_out['M1'] = 'State'
     ws_out['N1'] = 'url'
-    ws_out['O1'] = 'post'  
+    ws_out['O1'] = '原序号'  
     
     index = 2
     types = 1
@@ -112,7 +113,7 @@ if __name__ == '__main__':
             temp = 'N' + str(index)
             ws_out[temp] = i['url']
             temp = 'O' + str(index)
-            ws_out[temp] = 0
+            ws_out[temp] = ids[index - 2]
             index += 1
         types += 1
         
